@@ -19,7 +19,7 @@ function Tree(array) {
   }
 
   function insertRec(value, root) {
-    if (root == null) {
+    if (root === null) {
       return Node(value);
     }
 
@@ -37,11 +37,11 @@ function Tree(array) {
   }
 
   function deleteRec(value, root) {
-    if (root == null) return null;
-    if (root.data == value) {
-      if (root.left == null && root.right == null) return null;
-      else if (root.left == null) return root.right;
-      else if (root.right == null) return root.left;
+    if (root === null) return null;
+    if (root.data === value) {
+      if (root.left === null && root.right === null) return null;
+      else if (root.left === null) return root.right;
+      else if (root.right === null) return root.left;
       else {
         const dataCopy = getNextClosest(root);
         const rightRoot = deleteRec(dataCopy, root.right);
@@ -73,7 +73,7 @@ function Tree(array) {
   }
 
   function findRec(value, root) {
-    if (root == null) return null;
+    if (root === null) return null;
     if (root.data === value) return root;
 
     if (value < root.data) {
@@ -118,6 +118,64 @@ function Tree(array) {
     return levelOrderRec(values, queue);
   }
 
+  function inOrder(callback = null) {
+    const values = inOrderRec(root);
+
+    if (callback !== null) values.forEach(callback);
+    else return values;
+  }
+
+  function inOrderRec(root) {
+    if (root === null) return [];
+
+    return [...inOrderRec(root.left), root.data, ...inOrderRec(root.right)];
+  }
+
+  function preOrder(callback = null) {
+    const values = preOrderRec(root);
+
+    if (callback !== null) values.forEach(callback);
+    else return values;
+  }
+
+  function preOrderRec(root) {
+    if (root === null) return [];
+
+    return [root.data, ...preOrderRec(root.left), ...preOrderRec(root.right)];
+  }
+
+  function postOrder(callback = null) {
+    const values = postOrderRec(root);
+
+    if (callback !== null) values.forEach(callback);
+    else return values;
+  }
+
+  function postOrderRec(root) {
+    if (root === null) return [];
+
+    return [...postOrderRec(root.left), ...postOrderRec(root.right), root.data];
+  }
+
+  function height(node) {
+    if (node === null) return -1;
+    if (node.right === null && node.left === null) return 0;
+
+    return Math.max(height(node.left), height(node.right)) + 1;
+  }
+
+  function depth(node) {
+    return depthRec(node, root);
+  }
+
+  function depthRec(node, root) {
+    if (node === null) return -1;
+    if (findRec(node.data, root) === null) return -1;
+    if (node === root) return 0;
+
+    return Math.max(depthRec(node, root.left), depthRec(node, root.right)) + 1;
+  }
+
   function view() {
     prettyPrint(root);
   }
@@ -128,11 +186,18 @@ function Tree(array) {
     deleteItem,
     find,
     levelOrder,
-    levelOrderAlt
+    levelOrderAlt,
+    inOrder,
+    preOrder,
+    postOrder,
+    height,
+    depth,
   };
 }
 
 const t = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+t.deleteItem(23);
+t.deleteItem(5);
 t.view();
 
 function addOne(x) {
