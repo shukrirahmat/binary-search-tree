@@ -176,6 +176,18 @@ function Tree(array) {
     return Math.max(depthRec(node, root.left), depthRec(node, root.right)) + 1;
   }
 
+  function isBalanced() {
+    const rightHeight = height(root.right);
+    const leftHeight = height(root.left);
+
+    return !(Math.abs(rightHeight - leftHeight) > 1);
+  }
+
+  function rebalance() {
+    const newArray = inOrder();
+    root = builtTree(newArray);
+  }
+
   function view() {
     prettyPrint(root);
   }
@@ -192,6 +204,8 @@ function Tree(array) {
     postOrder,
     height,
     depth,
+    isBalanced,
+    rebalance
   };
 }
 
