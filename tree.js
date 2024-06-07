@@ -1,5 +1,9 @@
+import Node from "./node.js";
+import mergeSort from "./mergeSort.js";
+import prettyPrint from "./prettyPrint.js";
+
 function Tree(array) {
-  const sortedarray = mergeSort([...new Set(array)]);
+  const sortedarray = array.length > 0 ? mergeSort([...new Set(array)]) : [];
   let root = builtTree(sortedarray);
 
   function builtTree(array) {
@@ -189,7 +193,9 @@ function Tree(array) {
   }
 
   function view() {
+    console.log("");
     prettyPrint(root);
+    console.log("");
   }
 
   return {
@@ -205,15 +211,8 @@ function Tree(array) {
     height,
     depth,
     isBalanced,
-    rebalance
+    rebalance,
   };
 }
 
-const t = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-t.deleteItem(23);
-t.deleteItem(5);
-t.view();
-
-function addOne(x) {
-  console.log(x + 1);
-}
+export default Tree;

@@ -19,3 +19,5 @@ function mergeSort(array) {
     return merged.concat(righthalf).concat(lefthalf);
 
 }
+
+export default mergeSort;

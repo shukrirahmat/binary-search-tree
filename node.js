@@ -9,3 +9,5 @@ function Node(data) {
     left
   };
 }
+
+export default Node;
